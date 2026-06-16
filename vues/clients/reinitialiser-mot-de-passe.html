@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réinitialiser le mot de passe - Réseau Social</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body class="page-auth">
+
+    <div class="conteneur-auth">
+        <div class="bloc-presentation">
+            <h1>Réseau Social</h1>
+            <p>Choisissez un nouveau mot de passe pour sécuriser votre compte.</p>
+        </div>
+
+        <div class="carte-formulaire">
+            <h2>Nouveau mot de passe</h2>
+
+            <div id="messageAlerte" class="message-alerte"></div>
+
+            <form id="formulaireReinitialisation">
+                <div class="champ-formulaire">
+                    <input type="password" id="nouveauMotDePasse" name="nouveau_mot_de_passe" placeholder="Nouveau mot de passe" required>
+                    <div class="indication-champ">Au moins 8 caractères, une majuscule, une minuscule et un chiffre.</div>
+                </div>
+                <div class="champ-formulaire">
+                    <input type="password" id="confirmationMotDePasse" name="confirmation_mot_de_passe" placeholder="Confirmer le mot de passe" required>
+                </div>
+                <button type="submit" id="boutonReinitialiser" class="bouton bouton-primaire">Réinitialiser le mot de passe</button>
+            </form>
+
+            <hr class="separateur">
+
+            <a href="connexion.html" class="lien-secondaire">Retour à la connexion</a>
+        </div>
+    </div>
+
+    <script src="../../assets/js/commun.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+</body>
+</html>

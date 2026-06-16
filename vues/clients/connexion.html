@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Réseau Social</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body class="page-auth">
+
+    <div class="conteneur-auth">
+        <div class="bloc-presentation">
+            <h1>Réseau Social</h1>
+            <p>Connectez-vous pour échanger avec vos amis et découvrir leurs publications.</p>
+        </div>
+
+        <div class="carte-formulaire">
+            <h2>Connexion</h2>
+
+            <div id="messageAlerte" class="message-alerte"></div>
+
+            <form id="formulaireConnexion">
+                <div class="champ-formulaire">
+                    <input type="email" id="email" name="email" placeholder="Adresse email" required>
+                </div>
+                <div class="champ-formulaire">
+                    <input type="password" id="motDePasse" name="mot_de_passe" placeholder="Mot de passe" required>
+                </div>
+                <button type="submit" id="boutonConnexion" class="bouton bouton-primaire">Se connecter</button>
+            </form>
+
+            <a href="mot-de-passe-oublie.html" class="lien-secondaire">Mot de passe oublié ?</a>
+
+            <hr class="separateur">
+
+            <a href="inscription.html">
+                <button type="button" class="bouton bouton-succes">Créer un compte</button>
+            </a>
+        </div>
+    </div>
+
+    <script src="../../assets/js/commun.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+</body>
+</html>
