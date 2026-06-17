@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Administration</title>
+</head>
+<body>
+
+    <h1>Tableau de bord</h1>
+    <p id="info-role"></p>
+
+    <nav>
+        <a href="utilisateurs.html">Gérer les utilisateurs</a>
+        <a href="articles.html">Gérer les articles</a>
+        <a id="lien-admins" href="admins.html" style="display:none">Gérer les admins</a>
+    </nav>
+
+    <div id="statistiques">
+        <p>Nombre d'utilisateurs : <span id="nb-users"></span></p>
+        <p>Nombre d'articles : <span id="nb-posts"></span></p>
+        <p>Nombre de messages : <span id="nb-messages"></span></p>
+    </div>
+
+    <script src="../../assets/js/dashboard.js"></script>
+</body>
+</html>
