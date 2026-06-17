@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mon Profil</title>
+    <link rel="stylesheet" href="../../assets/css/profil.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>Mon Profil</h2>
+
+    <!-- Photo de profil -->
+    <div class="photo-section">
+        <img id="photo-profil" src="../../assets/images/default.png" alt="Photo de profil">
+        <input type="file" id="input-photo" accept="image/*">
+        <button onclick="changerPhoto()">Changer la photo</button>
+    </div>
+
+    <!-- Formulaire infos -->
+    <div class="infos-section">
+        <h3>Mes informations</h3>
+        <input type="text" id="nom" placeholder="Nom">
+        <input type="text" id="prenom" placeholder="Prénom">
+        <input type="email" id="email" placeholder="Email">
+        <input type="text" id="telephone" placeholder="Téléphone">
+        <input type="date" id="date_naissance">
+        <select id="sexe">
+            <option value="homme">Homme</option>
+            <option value="femme">Femme</option>
+        </select>
+        <button onclick="modifierProfil()">Enregistrer</button>
+        <p id="msg-profil"></p>
+    </div>
+
+    <!-- Formulaire mot de passe -->
+    <div class="password-section">
+        <h3>Changer le mot de passe</h3>
+        <input type="password" id="ancien-mdp" placeholder="Ancien mot de passe">
+        <input type="password" id="nouveau-mdp" placeholder="Nouveau mot de passe">
+        <input type="password" id="confirm-mdp" placeholder="Confirmer le mot de passe">
+        <button onclick="changerMotDePasse()">Modifier</button>
+        <p id="msg-mdp"></p>
+    </div>
+</div>
+
+<script src="../../assets/js/profil.js"></script>
+</body>
+</html>
