@@ -1,0 +1,7 @@
+{
+    "name": "groupe/reseau-social",
+    "description": "Examen final - Réseau Social Web en PHP et AJAX",
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    }
+}

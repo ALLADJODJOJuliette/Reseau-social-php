@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - Réseau Social</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body class="page-auth">
+
+    <div class="conteneur-auth">
+        <div class="bloc-presentation">
+            <h1>Réseau Social</h1>
+            <p>Créez votre compte pour rejoindre vos amis dès aujourd'hui.</p>
+        </div>
+
+        <div class="carte-formulaire">
+            <h2>Créer un compte</h2>
+
+            <div id="messageAlerte" class="message-alerte"></div>
+
+            <form id="formulaireInscription">
+                <div class="champ-formulaire">
+                    <input type="text" id="prenom" name="prenom" placeholder="Prénom" required>
+                </div>
+                <div class="champ-formulaire">
+                    <input type="text" id="nom" name="nom" placeholder="Nom" required>
+                </div>
+                <div class="champ-formulaire">
+                    <input type="email" id="email" name="email" placeholder="Adresse email" required>
+                </div>
+                <div class="champ-formulaire">
+                    <input type="password" id="motDePasse" name="mot_de_passe" placeholder="Mot de passe" required>
+                    <div class="indication-champ">Au moins 8 caractères, une majuscule, une minuscule et un chiffre.</div>
+                </div>
+                <div class="champ-formulaire">
+                    <input type="password" id="confirmationMotDePasse" name="confirmation_mot_de_passe" placeholder="Confirmer le mot de passe" required>
+                </div>
+                <button type="submit" id="boutonInscription" class="bouton bouton-succes">S'inscrire</button>
+            </form>
+
+            <hr class="separateur">
+
+            <a href="connexion.html" class="lien-secondaire">Vous avez déjà un compte ? Se connecter</a>
+        </div>
+    </div>
+
+    <script src="../../assets/js/commun.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+</body>
+</html>

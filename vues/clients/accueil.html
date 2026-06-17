@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Réseau Social</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <style>
+        .barre-haut {
+            background-color: #fff;
+            padding: 14px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .barre-haut h1 { color: var(--couleur-primaire); font-size: 24px; }
+        .contenu-page { padding: 40px; text-align: center; color: var(--couleur-texte-clair); }
+        #boutonDeconnexion {
+            width: auto;
+            padding: 8px 18px;
+            font-size: 14px;
+            background-color: var(--couleur-erreur);
+        }
+    </style>
+</head>
+<body>
+    <div class="barre-haut">
+        <h1>Réseau Social</h1>
+        <div>
+            <span id="nomUtilisateurConnecte" style="margin-right:16px;font-weight:bold;"></span>
+            <button id="boutonDeconnexion" class="bouton">Déconnexion</button>
+        </div>
+    </div>
+
+    <div class="contenu-page">
+        <p>Connexion réussie ! Le flux d'articles, la gestion des amis, le profil, le chat et le back-office seront développés dans les modules suivants du projet.</p>
+    </div>
+
+    <script src="../../assets/js/commun.js"></script>
+    <script>
+        // Protection de la page : redirige vers connexion.html si non connecté
+        exigerConnexion();
+
+        const utilisateur = utilisateurConnecte();
+        if (utilisateur) {
+            document.getElementById('nomUtilisateurConnecte').textContent = `${utilisateur.prenom} ${utilisateur.nom}`;
+        }
+
+        document.getElementById('boutonDeconnexion').addEventListener('click', deconnecter);
+    </script>
+</body>
+</html>

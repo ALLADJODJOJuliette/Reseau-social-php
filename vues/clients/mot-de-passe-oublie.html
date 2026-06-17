@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mot de passe oublié - Réseau Social</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body class="page-auth">
+
+    <div class="conteneur-auth">
+        <div class="bloc-presentation">
+            <h1>Réseau Social</h1>
+            <p>Pas de panique, ça arrive à tout le monde. Nous allons vous aider à récupérer votre compte.</p>
+        </div>
+
+        <div class="carte-formulaire">
+            <h2>Mot de passe oublié</h2>
+
+            <div id="messageAlerte" class="message-alerte"></div>
+
+            <form id="formulaireMotDePasseOublie">
+                <div class="champ-formulaire">
+                    <input type="email" id="email" name="email" placeholder="Votre adresse email" required>
+                </div>
+                <button type="submit" id="boutonEnvoyer" class="bouton bouton-primaire">Envoyer le lien de réinitialisation</button>
+            </form>
+
+            <hr class="separateur">
+
+            <a href="connexion.html" class="lien-secondaire">Retour à la connexion</a>
+        </div>
+    </div>
+
+    <script src="../../assets/js/commun.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+</body>
+</html>
