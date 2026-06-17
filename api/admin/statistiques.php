@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-$pdo=new PDO('mysql:host=localhost;port=3307;dbname=reseau_social;charset=utf8', 'root','');
+$pdo=new PDO('mysql:host=localhost;dbname=reseau_social;charset=utf8', 'root','');
 $nbUsers = $pdo->query('SELECT COUNT(*) FROM users')->fetchColumn();
 $nbPosts = $pdo->query('SELECT COUNT(*) FROM posts')->fetchColumn();
 $nbMessages = $pdo->query('SELECT COUNT(*) FROM messages')->fetchColumn();

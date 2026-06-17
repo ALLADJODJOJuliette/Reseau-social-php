@@ -1,7 +1,7 @@
 <?php
 // login.php
 header('Content-Type: application/json');
-$pdo=new PDO('mysql:host=localhost;port=3307;dbname=reseau_social;charset=utf8', 'root', '');
+$pdo=new PDO('mysql:host=localhost;dbname=reseau_social;charset=utf8', 'root', '');
 //Récupération des données envoyées par JS
 $data = json_decode(file_get_contents('php://input'), true);
 

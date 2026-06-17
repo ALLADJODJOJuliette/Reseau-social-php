@@ -1,5 +1,5 @@
 <?php
-$pdo = new PDO('mysql:host=localhost;port=3307;dbname=reseau_social;charset=utf8', 'root', '');
+$pdo = new PDO('mysql:host=localhost;dbname=reseau_social;charset=utf8', 'root', '');
 
 $motDePasseHash = password_hash('admin123', PASSWORD_DEFAULT);
 
