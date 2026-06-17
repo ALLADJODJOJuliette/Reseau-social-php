@@ -1,16 +1,13 @@
-//Vérification de la connexion de l'administrateur sinon redirection vers la page de connexion
-const role=sessionStorage.getItem('admin_role')
-const id=sessionStorage.getItem('admin_id')
-if(!role || !id){
-    window.location.href = 'admin-login.html';
+// Vérification de la connexion de l'administrateur sinon redirection
+const role = sessionStorage.getItem('admin_role')
+const id = sessionStorage.getItem('admin_id')
+if (!role || !id) {
+    window.location.href = 'admin-login.html'
 }
-//Afficher le rôle à l'écran du tableau de bord
-document.getElementById('info-role').innerText = 'Connecté en tant que : ' + role;
 
-//Afficher le lien 'Gérer les administrateurs' uniquement si l'utilisateur est un  administrateur
-if(role === 'administrateur'){
-    document.getElementById('lien-admins').style.display = 'block';
-}
+// Afficher le rôle à l'écran du tableau de bord
+document.getElementById('info-role').innerText = 'Connecté en tant que : ' + role
+
 // Charger les statistiques du tableau de bord depuis le fichier statistiques.php
 fetch('../../api/admin/statistiques.php')
     .then(response => response.json())
