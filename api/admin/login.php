@@ -1,6 +1,7 @@
 <?php
 // login.php
 header('Content-Type: application/json');
+session_start();
 $pdo=new PDO('mysql:host=localhost;dbname=reseau_social;charset=utf8', 'root', '');
 //Récupération des données envoyées par JS
 $data = json_decode(file_get_contents('php://input'), true);
@@ -13,6 +14,8 @@ $requete->execute(['email' => $email]);
 $user = $requete->fetch(PDO::FETCH_ASSOC);
 
 if ($user && password_verify($motDePasse, $user['mot_de_passe']) && $user['role'] !== 'user') {
+    $_SESSION['admin_role'] = $user['role'];
+    $_SESSION['admin_id'] = $user['id'];
     echo json_encode([
         'success' => true,
          'role' => $user['role'], 
