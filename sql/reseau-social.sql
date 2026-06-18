@@ -1,6 +1,5 @@
 -- ============================================================
 -- Schéma de base de données — Réseau Social Web (PHP/AJAX)
--- Base commune à toute l'équipe
 -- ============================================================
 
 CREATE DATABASE IF NOT EXISTS reseau_social
@@ -9,8 +8,6 @@ USE reseau_social;
 
 -- ------------------------------------------------------------
 -- Table : users
--- Regroupe TOUT le monde (user, moderateur, administrateur)
--- La différence de droits se fait uniquement via la colonne "role"
 -- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS users (
     id                  INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -18,7 +15,7 @@ CREATE TABLE IF NOT EXISTS users (
     prenom              VARCHAR(50)  NOT NULL,
     email               VARCHAR(150) NOT NULL UNIQUE,
     telephone           VARCHAR(20)  DEFAULT NULL,
-    mot_de_passe        VARCHAR(255) NOT NULL,            -- hash (password_hash)
+    mot_de_passe        VARCHAR(255) NOT NULL,
     photo_profil        VARCHAR(255) DEFAULT 'assets/images/default-avatar.png',
     date_naissance      DATE         DEFAULT NULL,
     sexe                ENUM('homme','femme') DEFAULT NULL,
@@ -31,7 +28,7 @@ CREATE TABLE IF NOT EXISTS users (
 ) ENGINE=InnoDB;
 
 -- ------------------------------------------------------------
--- Table : tokens_confirmation (validation de l'email à l'inscription)
+-- Table : tokens_confirmation
 -- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS tokens_confirmation (
     id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -45,7 +42,7 @@ CREATE TABLE IF NOT EXISTS tokens_confirmation (
 ) ENGINE=InnoDB;
 
 -- ------------------------------------------------------------
--- Table : tokens_reset_password (mot de passe oublié)
+-- Table : tokens_reset_password
 -- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS tokens_reset_password (
     id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -59,81 +56,98 @@ CREATE TABLE IF NOT EXISTS tokens_reset_password (
 ) ENGINE=InnoDB;
 
 -- ------------------------------------------------------------
--- Table : posts — les articles publiés par les users
+-- Table : posts
 -- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS posts (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    contenu TEXT NOT NULL,
-    image VARCHAR(255),
+    id               INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id          INT UNSIGNED NOT NULL,
+    contenu          TEXT NOT NULL,
+    image            VARCHAR(255) DEFAULT NULL,
     date_publication DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    CONSTRAINT fk_posts_user
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 -- ------------------------------------------------------------
--- Table : likes — un user ne peut liker qu'une seule fois le même post
+-- Table : likes
 -- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS likes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    post_id INT NOT NULL,
+    id            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id       INT UNSIGNED NOT NULL,
+    post_id       INT UNSIGNED NOT NULL,
     type_reaction ENUM('jaime','coeur','rire') NOT NULL,
-    date_like DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
+    date_like     DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_likes_user
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_likes_post
+        FOREIGN KEY (post_id) REFERENCES posts(id)
+        ON DELETE CASCADE,
     UNIQUE KEY unique_like (user_id, post_id)
 ) ENGINE=InnoDB;
 
 -- ------------------------------------------------------------
--- Table : comments — commentaires sous un post
+-- Table : comments
 -- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS comments (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    post_id INT NOT NULL,
-    contenu TEXT NOT NULL,
+    id               INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id          INT UNSIGNED NOT NULL,
+    post_id          INT UNSIGNED NOT NULL,
+    contenu          TEXT NOT NULL,
     date_commentaire DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
+    CONSTRAINT fk_comments_user
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_comments_post
+        FOREIGN KEY (post_id) REFERENCES posts(id)
+        ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 -- ------------------------------------------------------------
--- Table : friendships — demandes d'amitié entre deux users
+-- Table : friendships
 -- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS friendships (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    friend_id INT NOT NULL,
-    statut ENUM('en_attente','accepte','refuse') DEFAULT 'en_attente',
+    id           INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id      INT UNSIGNED NOT NULL,
+    friend_id    INT UNSIGNED NOT NULL,
+    statut       ENUM('en_attente','accepte','refuse') DEFAULT 'en_attente',
     date_demande DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (friend_id) REFERENCES users(id) ON DELETE CASCADE
+    CONSTRAINT fk_friendships_user
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_friendships_friend
+        FOREIGN KEY (friend_id) REFERENCES users(id)
+        ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 -- ------------------------------------------------------------
--- Table : messages — chat privé entre deux users
+-- Table : messages
 -- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS messages (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    expediteur_id INT NOT NULL,
-    destinataire_id INT NOT NULL,
-    contenu TEXT,
-    image VARCHAR(255),
-    lu TINYINT(1) DEFAULT 0,
-    date_envoi DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (expediteur_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (destinataire_id) REFERENCES users(id) ON DELETE CASCADE
+    id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    expediteur_id   INT UNSIGNED NOT NULL,
+    destinataire_id INT UNSIGNED NOT NULL,
+    contenu         TEXT,
+    image           VARCHAR(255) DEFAULT NULL,
+    lu              TINYINT(1)   DEFAULT 0,
+    date_envoi      DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_messages_expediteur
+        FOREIGN KEY (expediteur_id) REFERENCES users(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_messages_destinataire
+        FOREIGN KEY (destinataire_id) REFERENCES users(id)
+        ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 -- ------------------------------------------------------------
--- Données de test (identifiants pour le README / la démo)
--- Mot de passe en clair pour les tests : "Test1234!"
---
--- IMPORTANT : générez d'abord le hash bcrypt avec :
+-- Données de test
+-- Mot de passe en clair : "Test1234!"
+-- Générer le hash avec :
 --   php -r "echo password_hash('Test1234!', PASSWORD_BCRYPT);"
--- puis collez-le dans les INSERT ci-dessous.
+-- puis remplacer <<HASH_ICI>>
 -- ------------------------------------------------------------
 INSERT INTO users (nom, prenom, email, mot_de_passe, role) VALUES
-('Admin', 'Principal', 'admin@reseausocial.com', '<<HASH_ICI>>', 'administrateur'),
-('Modo', 'Principal', 'moderateur@reseausocial.com', '<<HASH_ICI>>', 'moderateur'),
-('Client', 'Test', 'client@reseausocial.com', '<<HASH_ICI>>', 'user');
+('Admin',  'Principal', 'admin@reseausocial.com',      '<<HASH_ICI>>', 'administrateur'),
+('Modo',   'Principal', 'moderateur@reseausocial.com', '<<HASH_ICI>>', 'moderateur'),
+('Client', 'Test',      'client@reseausocial.com',     '<<HASH_ICI>>', 'user');
