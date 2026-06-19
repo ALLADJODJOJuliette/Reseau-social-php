@@ -1,6 +1,6 @@
 const role = sessionStorage.getItem('admin_role')
 const id = sessionStorage.getItem('admin_id')
-if (!role || !id) { window.location.href = 'admin-login.html'; return }
+if (!role || !id) { window.location.href = 'admin-login.html'; }
 
 document.getElementById('info-role').innerText = 'Connecté en tant que : ' + role
 

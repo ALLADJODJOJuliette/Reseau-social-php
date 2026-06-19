@@ -148,6 +148,6 @@ CREATE TABLE IF NOT EXISTS messages (
 -- puis remplacer <<HASH_ICI>>
 -- ------------------------------------------------------------
 INSERT INTO users (nom, prenom, email, mot_de_passe, role) VALUES
-('Admin',  'Principal', 'admin@reseausocial.com',      '<<HASH_ICI>>', 'administrateur'),
-('Modo',   'Principal', 'moderateur@reseausocial.com', '<<HASH_ICI>>', 'moderateur'),
-('Client', 'Test',      'client@reseausocial.com',     '<<HASH_ICI>>', 'user');
+('Admin',  'Principal', 'admin@reseausocial.com',      '$2y$10$BMVAS6OWpvUKiP1DjypHluFphkM/TRbIik5Jcu.FD3sFordWYvdl.', 'administrateur'),
+('Modo',   'Principal', 'moderateur@reseausocial.com', '$2y$10$BMVAS6OWpvUKiP1DjypHluFphkM/TRbIik5Jcu.FD3sFordWYvdl.', 'moderateur'),
+('Client', 'Test',      'client@reseausocial.com',     '$2y$10$BMVAS6OWpvUKiP1DjypHluFphkM/TRbIik5Jcu.FD3sFordWYvdl.', 'user');

@@ -1,6 +1,6 @@
 const role = sessionStorage.getItem('admin_role')
 if (!role) {
-    window.location.href = 'admin-login.html'; return;
+    window.location.href = 'admin-login.html'; 
 }
 
 let csrfToken = ''

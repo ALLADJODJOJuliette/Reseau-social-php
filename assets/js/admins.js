@@ -1,5 +1,5 @@
 const role = sessionStorage.getItem('admin_role')
-if (!role) { window.location.href = 'admin-login.html'; return; }
+if (!role) { window.location.href = 'admin-login.html';  }
 if (role !== 'administrateur') {
     alert('Accès réservé aux administrateurs')
     window.location.href = 'dashboard.html'
