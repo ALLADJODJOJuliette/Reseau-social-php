@@ -16,9 +16,15 @@ function chargerUsers() {
         .then(data => {
             let html = ''
             data.forEach(user => {
+                    let avatarParDefaut = 'assets/images/default-avatar.png';
+if (user.sexe === 'homme') avatarParDefaut = 'assets/images/default-avatar-homme.png';
+if (user.sexe === 'femme') avatarParDefaut = 'assets/images/default-avatar-femme.png';
+
+const photoEstParDefaut = !user.photo_profil || user.photo_profil.includes('default-avatar');
+const photoAAfficher = photoEstParDefaut ? avatarParDefaut : user.photo_profil;
                 html += `
                     <tr>
-                        <td><img src="../../assets/images/${user.photo_profil || 'default.png'}" width="40"></td>
+                        <td><img src="../../${photoAAfficher}" width="40"></td>
                         <td>${user.nom}</td>
                         <td>${user.prenom}</td>
                         <td>${user.email}</td>
@@ -59,7 +65,7 @@ function rechercherProfil() {
         return;
     }
 
-    fetch('../../api/admin/profil-utilisateur.php?recherche=' + encodeURIComponent(recherche))
+    fetch('../../api/admin/profil-utlisateur.php?recherche=' + encodeURIComponent(recherche))
         .then(response => response.json())
         .then(data => {
             if (!data.success) {
