@@ -1,6 +1,6 @@
 const role = sessionStorage.getItem('admin_role')
 if (!role) {
-    window.location.href = 'admin-login.html'
+    window.location.href = 'admin-login.html'; return;
 }
 
 let csrfToken = ''
@@ -51,4 +51,42 @@ function supprimerUser(id) {
             alert(data.message)
         }
     })
+}
+function rechercherProfil() {
+    const recherche = document.getElementById('champ-recherche').value;
+    if (!recherche) {
+        alert('Tape un nom, prénom ou email');
+        return;
+    }
+
+    fetch('../../api/admin/profil-utilisateur.php?recherche=' + encodeURIComponent(recherche))
+        .then(response => response.json())
+        .then(data => {
+            if (!data.success) {
+                document.getElementById('resultat-profil').innerHTML = '<p>' + data.message + '</p>';
+                return;
+            }
+
+            let htmlTypes = '';
+            data.typesLikes.forEach(t => {
+                htmlTypes += `${t.type_reaction} : ${t.total}<br>`;
+            });
+
+            document.getElementById('resultat-profil').innerHTML = `
+                <div class="carte-profil">
+                    <h3>${data.prenom} ${data.nom}</h3>
+                    <p>Email : ${data.email}</p>
+                    <p>Rôle : ${data.role} — Statut : ${data.statut}</p>
+                    <p>Inscrit le : ${data.date_creation}</p>
+                    <hr>
+                    <p>Articles publiés : ${data.nbPosts}</p>
+                    <p>Commentaires laissés : ${data.nbComments}</p>
+                    <p>Réactions données : ${data.nbLikesDonnes}</p>
+                    <p>Détail des réactions : <br>${htmlTypes}</p>
+                    <p>Messages envoyés : ${data.nbMessagesEnvoyes}</p>
+                    <p>Messages reçus : ${data.nbMessagesRecus}</p>
+                    <p>Amis : ${data.nbAmis}</p>
+                </div>
+            `;
+        });
 }

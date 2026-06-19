@@ -3,14 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Gestion des admins</title>
+    <link rel="stylesheet" href="../../assets/CSS/back-office.css">
 </head>
 <body>
 
     <h1>Gestion des rôles</h1>
 
-    <div id="nav"></div>
+<div id="nav"></div>
 
-    <h2>Utilisateurs simples</h2>
+    <form id="formulaire-nouvel-admin" onsubmit="event.preventDefault(); creerAdmin();">
+        <h3>Créer un nouveau modérateur/administrateur</h3>
+        <input type="text" id="nouveau-nom" placeholder="Nom" required>
+        <input type="text" id="nouveau-prenom" placeholder="Prénom" required>
+        <input type="email" id="nouveau-email" placeholder="Email" required>
+        <input type="password" id="nouveau-mdp" placeholder="Mot de passe" required>
+        <select id="nouveau-role">
+            <option value="moderateur">Modérateur</option>
+            <option value="administrateur">Administrateur</option>
+        </select>
+        <button type="submit">Créer le compte</button>
+    </form>
+
+<h2>Utilisateurs simples</h2>
     <table id="tableau-users">
         <thead>
             <tr><th>Nom</th><th>Prénom</th><th>Email</th><th>Action</th></tr>

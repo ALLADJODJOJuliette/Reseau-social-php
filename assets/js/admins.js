@@ -1,5 +1,5 @@
 const role = sessionStorage.getItem('admin_role')
-if (!role) { window.location.href = 'admin-login.html' }
+if (!role) { window.location.href = 'admin-login.html'; return; }
 if (role !== 'administrateur') {
     alert('Accès réservé aux administrateurs')
     window.location.href = 'dashboard.html'
@@ -55,4 +55,33 @@ function supprimerCompte(id) {
     })
     .then(response => response.json())
     .then(data => { if (data.success) { chargerAdmins() } else { alert(data.message) } })
+}
+
+function creerAdmin() {
+    const nom = document.getElementById('nouveau-nom').value;
+    const prenom = document.getElementById('nouveau-prenom').value;
+    const email = document.getElementById('nouveau-email').value;
+    const motDePasse = document.getElementById('nouveau-mdp').value;
+    const role = document.getElementById('nouveau-role').value;
+
+    if (!nom || !prenom || !email || !motDePasse) {
+        alert('Veuillez remplir tous les champs');
+        return;
+    }
+
+    fetch('../../api/admin/creer-admin.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nom, prenom, email, motDePasse, role, csrfToken: csrfToken })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Compte créé avec succès');
+            document.getElementById('formulaire-nouvel-admin').reset();
+            chargerAdmins();
+        } else {
+            alert(data.message);
+        }
+    });
 }

@@ -1,0 +1,300 @@
+
+
+:root {
+    --fond-principal: #0d1117;
+    --fond-carte: #161b22;
+    --vert-accent: #2ecc71;
+    --vert-fonce: #1a7a43;
+    --texte-clair: #e6edf3;
+    --texte-attenue: #8b949e;
+    --rouge-danger: #e74c3c;
+    --bordure: #2a2f3a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: var(--fond-principal);
+    color: var(--texte-clair);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* ------------------------------------------------------------
+   Fond animé : grille subtile qui défile lentement
+   ------------------------------------------------------------ */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(rgba(46, 204, 113, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(46, 204, 113, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: glisser-grille 20s linear infinite;
+    z-index: -1;
+}
+
+@keyframes glisser-grille {
+    0%   { background-position: 0 0; }
+    100% { background-position: 40px 40px; }
+}
+
+/* ------------------------------------------------------------
+   Titres : monospace, comme du code
+   ------------------------------------------------------------ */
+h1, h2, h3 {
+    font-family: 'Consolas', 'Courier New', monospace;
+    color: var(--vert-accent);
+}
+
+h1 {
+    font-size: 1.8rem;
+    padding: 20px 30px;
+    border-bottom: 1px solid var(--bordure);
+}
+
+h2 {
+    font-size: 1.2rem;
+    margin: 25px 30px 10px;
+}
+
+h3 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+/* ------------------------------------------------------------
+   Navigation
+   ------------------------------------------------------------ */
+nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 30px;
+    background-color: var(--fond-carte);
+    border-bottom: 1px solid var(--bordure);
+}
+
+nav a {
+    font-family: 'Consolas', monospace;
+    color: var(--texte-clair);
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+nav a:hover {
+    background-color: var(--vert-fonce);
+    color: #fff;
+}
+
+nav button {
+    margin-left: auto;
+    background-color: transparent;
+    border: 1px solid var(--rouge-danger);
+    color: var(--rouge-danger);
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Consolas', monospace;
+}
+
+nav button:hover {
+    background-color: var(--rouge-danger);
+    color: #fff;
+}
+
+/* ------------------------------------------------------------
+   Tableaux
+   ------------------------------------------------------------ */
+table {
+    width: calc(100% - 60px);
+    margin: 0 30px 30px;
+    border-collapse: collapse;
+    background-color: var(--fond-carte);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(46, 204, 113, 0.05);
+}
+
+thead {
+    background-color: var(--vert-fonce);
+}
+
+th {
+    font-family: 'Consolas', monospace;
+    text-align: left;
+    padding: 12px 16px;
+    color: #fff;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--bordure);
+    font-size: 0.9rem;
+    color: var(--texte-clair);
+}
+
+tbody tr:hover {
+    background-color: rgba(46, 204, 113, 0.06);
+}
+
+/* ------------------------------------------------------------
+   Boutons d'action
+   ------------------------------------------------------------ */
+button {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    cursor: pointer;
+}
+
+td button {
+    background-color: var(--vert-fonce);
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    margin-right: 6px;
+    transition: 0.2s;
+}
+
+td button:hover {
+    background-color: var(--vert-accent);
+}
+
+/* Boutons "Supprimer" reconnus par leur texte via attribut data si tu veux les cibler à part, sinon garde ce style général */
+
+/* ------------------------------------------------------------
+   Formulaires (login, créer admin, recherche)
+   ------------------------------------------------------------ */
+#formulaire-connexion,
+#formulaire-nouvel-admin,
+#recherche-profil {
+    background-color: var(--fond-carte);
+    border: 1px solid var(--bordure);
+    border-radius: 12px;
+    padding: 25px 30px;
+    margin: 30px;
+    max-width: 400px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    background-color: var(--fond-principal);
+    border: 1px solid var(--bordure);
+    border-radius: 6px;
+    color: var(--texte-clair);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 0.9rem;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--vert-accent);
+}
+
+#formulaire-connexion button,
+#formulaire-nouvel-admin button,
+#recherche-profil button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--vert-accent);
+    color: #0d1117;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    margin-top: 5px;
+}
+
+#formulaire-connexion button:hover,
+#formulaire-nouvel-admin button:hover,
+#recherche-profil button:hover {
+    background-color: #27ae60;
+}
+
+#message-erreur {
+    color: var(--rouge-danger);
+    font-family: 'Consolas', monospace;
+    font-size: 0.85rem;
+    margin-top: 10px;
+}
+
+/* ------------------------------------------------------------
+   Carte profil détaillé (recherche utilisateur)
+   ------------------------------------------------------------ */
+.carte-profil {
+    background-color: var(--fond-principal);
+    border: 1px solid var(--vert-fonce);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.carte-profil h3 {
+    color: var(--vert-accent);
+}
+
+/* ------------------------------------------------------------
+   Statistiques (dashboard)
+   ------------------------------------------------------------ */
+#statistiques {
+    margin: 30px;
+}
+
+#statistiques p {
+    background-color: var(--fond-carte);
+    padding: 12px 18px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border-left: 3px solid var(--vert-accent);
+}
+
+#statistiques span {
+    font-family: 'Consolas', monospace;
+    color: var(--vert-accent);
+    font-weight: bold;
+}
+td img {
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--vert-fonce);
+}
+@media(max-width: 768px) {
+    table {
+        display: block;
+        width: calc(100% - 30px);
+        margin: 0 15px 20px;
+        overflow-x: auto;
+    }
+    h1 {
+        padding: 15px;
+        font-size: 1.4rem;
+    }
+    nav {
+        flex-wrap: wrap;
+        padding: 12px 15px;
+        gap: 10px;
+    }
+}
+#info-role {
+    margin: 15px 30px 0;
+    font-family: 'Consolas', monospace;
+    color: var(--vert-attenue);
+}

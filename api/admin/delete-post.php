@@ -1,6 +1,8 @@
 <?php
 header('Content-Type: application/json');
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 $pdo = new PDO('mysql:host=localhost;dbname=reseau_social;charset=utf8', 'root', '');
 
 $donnees = json_decode(file_get_contents('php://input'), true);

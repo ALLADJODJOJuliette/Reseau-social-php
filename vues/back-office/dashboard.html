@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard Administration</title>
+    <link rel="stylesheet" href="../../assets/CSS/back-office.css">
 </head>
 <body>
 
@@ -11,11 +12,26 @@
 
     <div id="nav"></div>
 
-    <div id="statistiques">
-        <p>Nombre d'utilisateurs : <span id="nb-users"></span></p>
-        <p>Nombre d'articles : <span id="nb-posts"></span></p>
-        <p>Nombre de messages : <span id="nb-messages"></span></p>
-    </div>
+   <div id="statistiques">
+    <h2>Vue d'ensemble</h2>
+    <p>Nombre d'utilisateurs : <span id="nb-users"></span></p>
+    <p>Nombre d'articles : <span id="nb-posts"></span></p>
+    <p>Nombre de messages : <span id="nb-messages"></span></p>
+    <p>Nombre de commentaires : <span id="nb-comments"></span></p>
+    <p>Nombre de likes : <span id="nb-likes"></span></p>
+
+    <h2>Répartition des rôles</h2>
+    <p>Administrateurs : <span id="nb-admins"></span></p>
+    <p>Modérateurs : <span id="nb-moderateurs"></span></p>
+    <p>Utilisateurs simples : <span id="nb-users-simples"></span></p>
+
+    <h2>Modération</h2>
+    <p>Comptes suspendus : <span id="nb-suspendus"></span></p>
+    <p>Demandes d'amitié en attente : <span id="nb-demandes-attente"></span></p>
+
+    <h2>Activité récente</h2>
+    <p>Inscriptions cette semaine : <span id="nb-inscriptions-semaine"></span></p>
+</div>
 
     <script src="../../assets/js/nav.js"></script>
     <script src="../../assets/js/dashboard.js"></script>
