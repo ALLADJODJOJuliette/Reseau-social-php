@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <link rel="stylesheet" href="../../assets/css/chat.css">
+</head>
+<body>
+
+<div class="chat-container">
+
+    <!-- SIDEBAR gauche -->
+    <div class="sidebar">
+        <h3>Messages</h3>
+
+        <!-- Recherche d'amis -->
+        <input type="text" id="recherche-ami" placeholder="Rechercher un ami...">
+        <div id="resultats-recherche"></div>
+
+        <!-- Conversations existantes -->
+        <div id="liste-conversations"></div>
+    </div>
+
+    <!-- ZONE DE CHAT droite -->
+    <div class="chat-zone">
+
+        <!-- Header contact actif -->
+        <div class="chat-header" id="chat-header">
+            <p>Sélectionne une conversation</p>
+        </div>
+
+        <!-- Messages -->
+        <div class="messages-zone" id="messages-zone">
+        </div>
+
+        <!-- Formulaire envoi -->
+        <div class="chat-input">
+            <input type="text" id="input-message" placeholder="Écrire un message...">
+            <input type="file" id="input-image" accept="image/*">
+            <button onclick="envoyerMessage()">Envoyer</button>
+        </div>
+
+    </div>
+</div>
+
+<script src="../../assets/js/chat.js"></script>
+</body>
+</html>
