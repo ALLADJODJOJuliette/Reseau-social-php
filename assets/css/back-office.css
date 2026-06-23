@@ -1,5 +1,3 @@
-
-
 :root {
     --fond-principal: #0d1117;
     --fond-carte: #161b22;
@@ -27,26 +25,86 @@ body {
 }
 
 /* ------------------------------------------------------------
-   Fond animé : grille subtile qui défile lentement
+   Fond animé, en 3 couches superposées :
+   1. Dégradé qui respire lentement
+   2. Grille qui glisse en diagonale
+   3. Particules flottantes (ajoutées via .fond-particules dans le HTML)
    ------------------------------------------------------------ */
+
 body::before {
     content: '';
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
+    background: radial-gradient(circle at 20% 30%, rgba(46, 204, 113, 0.22), transparent 45%),
+                radial-gradient(circle at 80% 70%, rgba(46, 204, 113, 0.16), transparent 50%),
+                var(--fond-principal);
+    animation: respirer 12s ease-in-out infinite;
+    z-index: -3;
+}
+
+@keyframes respirer {
+    0%, 100% { filter: brightness(1); }
+    50%      { filter: brightness(1.3); }
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    inset: -50px;
     background-image:
-        linear-gradient(rgba(46, 204, 113, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(46, 204, 113, 0.04) 1px, transparent 1px);
-    background-size: 40px 40px;
-    animation: glisser-grille 20s linear infinite;
-    z-index: -1;
+        linear-gradient(rgba(46, 204, 113, 0.14) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(46, 204, 113, 0.14) 1px, transparent 1px);
+    background-size: 42px 42px;
+    animation: glisser-grille 25s linear infinite;
+    z-index: -2;
 }
 
 @keyframes glisser-grille {
-    0%   { background-position: 0 0; }
-    100% { background-position: 40px 40px; }
+    0%   { transform: translate(0, 0); }
+    100% { transform: translate(42px, 42px); }
+}
+
+.fond-particules {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.particule {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--vert-accent);
+    opacity: 0.7;
+    box-shadow: 0 0 6px var(--vert-accent);
+    animation: flotter linear infinite;
+}
+
+@keyframes flotter {
+    0%   { transform: translateY(0) translateX(0); opacity: 0; }
+    10%  { opacity: 0.5; }
+    90%  { opacity: 0.5; }
+    100% { transform: translateY(-110vh) translateX(20px); opacity: 0; }
+}
+
+.particule:nth-child(1)  { left: 5%;  width: 2px; height: 2px; animation-duration: 18s; animation-delay: 0s;  }
+.particule:nth-child(2)  { left: 15%; width: 4px; height: 4px; animation-duration: 22s; animation-delay: 3s;  }
+.particule:nth-child(3)  { left: 25%; width: 2px; height: 2px; animation-duration: 16s; animation-delay: 6s;  }
+.particule:nth-child(4)  { left: 35%; width: 3px; height: 3px; animation-duration: 24s; animation-delay: 1s;  }
+.particule:nth-child(5)  { left: 45%; width: 2px; height: 2px; animation-duration: 19s; animation-delay: 8s;  }
+.particule:nth-child(6)  { left: 55%; width: 4px; height: 4px; animation-duration: 21s; animation-delay: 4s;  }
+.particule:nth-child(7)  { left: 65%; width: 2px; height: 2px; animation-duration: 17s; animation-delay: 10s; }
+.particule:nth-child(8)  { left: 75%; width: 3px; height: 3px; animation-duration: 23s; animation-delay: 2s;  }
+.particule:nth-child(9)  { left: 85%; width: 2px; height: 2px; animation-duration: 20s; animation-delay: 7s;  }
+.particule:nth-child(10) { left: 95%; width: 3px; height: 3px; animation-duration: 25s; animation-delay: 5s;  }
+.particule:nth-child(11) { left: 50%; width: 2px; height: 2px; animation-duration: 18s; animation-delay: 11s; }
+.particule:nth-child(12) { left: 10%; width: 3px; height: 3px; animation-duration: 22s; animation-delay: 9s;  }
+
+@media (max-width: 768px) {
+    .fond-particules { display: none; }
 }
 
 /* ------------------------------------------------------------
@@ -175,8 +233,6 @@ td button:hover {
     background-color: var(--vert-accent);
 }
 
-/* Boutons "Supprimer" reconnus par leur texte via attribut data si tu veux les cibler à part, sinon garde ce style général */
-
 /* ------------------------------------------------------------
    Formulaires (login, créer admin, recherche)
    ------------------------------------------------------------ */
@@ -271,12 +327,20 @@ input:focus, select:focus {
     color: var(--vert-accent);
     font-weight: bold;
 }
+
 td img {
     border-radius: 50%;
     object-fit: cover;
     border: 1px solid var(--vert-fonce);
 }
-@media(max-width: 768px) {
+
+#info-role {
+    margin: 15px 30px 0;
+    font-family: 'Consolas', monospace;
+    color: var(--texte-attenue);
+}
+
+@media (max-width: 768px) {
     table {
         display: block;
         width: calc(100% - 30px);
@@ -292,9 +356,4 @@ td img {
         padding: 12px 15px;
         gap: 10px;
     }
-}
-#info-role {
-    margin: 15px 30px 0;
-    font-family: 'Consolas', monospace;
-    color: var(--vert-attenue);
 }
