@@ -1,96 +1,120 @@
 # Réseau Social Web — PHP & AJAX
 
-Projet d'examen final : application web de réseau social inspirée de Facebook, développée en PHP natif (API), JavaScript natif (AJAX/Fetch) et MySQL.
+Projet final réalisé dans le cadre de l'examen de fin d'année, ESGIS — Licence 2 IRT/AL.
 
-> **Statut actuel** : le module **Authentification** (inscription, confirmation par email, connexion, mot de passe oublié) est complet et fonctionnel. Les modules Flux d'articles, Amis, Profil, Chat et Back-Office restent à développer.
+Application web de type réseau social, inspirée de Facebook, développée en PHP natif (API), JavaScript natif (AJAX, sans rechargement de page) et MySQL.
+
+---
 
 ## Description du projet
 
-L'application permet à un utilisateur de créer un compte, de confirmer son adresse email, de se connecter et de réinitialiser son mot de passe en cas d'oubli — le tout sans rechargement de page, via des appels AJAX vers une API PHP.
+Le projet comprend :
 
-## Architecture du projet
+- **Module d'authentification** : inscription avec confirmation par email, connexion, mot de passe oublié
+- **Flux d'articles** : publication, likes/dislikes, commentaires en AJAX
+- **Gestion des amis** : invitations, acceptation/refus, consultation de profils
+- **Profil personnel** : modification des informations, photo de profil, mot de passe
+- **Module Chat** : conversations en temps réel (simulation par intervalle JS)
+- **Back-office** : tableau de bord, gestion des utilisateurs, des articles, et des comptes administrateurs/modérateurs, avec sécurité CSRF et contrôle des rôles
 
-```
-reseau-social/
-├── index.html                  # Point d'entrée, redirige selon sessionStorage
-├── composer.json                # Dépendance PHPMailer
-├── assets/
-│   ├── css/style.css            # Style global
-│   ├── js/
-│   │   ├── commun.js             # Helpers AJAX, sessionStorage
-│   │   └── auth.js                # Logique inscription/connexion/reset
-│   └── images/
-├── vues/
-│   ├── clients/
-│   │   ├── connexion.html
-│   │   ├── inscription.html
-│   │   ├── mot-de-passe-oublie.html
-│   │   ├── reinitialiser-mot-de-passe.html
-│   │   └── accueil.html          # Placeholder post-connexion
-│   └── back-office/               # À développer
-├── api/
-│   ├── inscription.php
-│   ├── connexion.php
-│   ├── confirmer_email.php
-│   ├── mot_de_passe_oublie.php
-│   ├── reinitialiser_mot_de_passe.php
-│   └── utils/
-│       ├── helpers.php
-│       ├── mailer.php
-│       └── generer_hash.php
-├── config/
-│   ├── database.php
-│   └── config.php
-└── sql/
-    └── schema.sql
-```
+---
 
 ## Mode de fonctionnement
 
-### 1. Installation
+### Architecture
 
-1. Créer la base de données : importer `sql/schema.sql` dans MySQL (via phpMyAdmin ou la ligne de commande `mysql -u root -p < sql/schema.sql`).
-2. Adapter les identifiants de connexion à la base dans `config/database.php` (`DB_HOST`, `DB_USER`, `DB_PASS`).
-3. Installer PHPMailer via Composer, à la racine du projet :
-   ```
-   composer require phpmailer/phpmailer
-   ```
-4. Configurer l'envoi d'email dans `config/config.php` (section SMTP) : renseigner `SMTP_USER` et `SMTP_PASS` avec un compte SMTP valide (ex : Gmail + mot de passe d'application).
-5. Générer le hash du mot de passe administrateur de test et le coller dans `sql/schema.sql` avant import :
-   ```
-   php api/utils/generer_hash.php "Test1234!"
-   ```
-6. Servir le projet via un serveur PHP local (ex : `php -S localhost:8000` depuis la racine, ou XAMPP/WAMP).
+```
+reseau-social-php/
+├── api/            → scripts PHP (API JSON)
+│   └── admin/      → endpoints du back-office
+├── assets/
+│   ├── css/
+│   ├── images/
+│   └── js/
+├── config/         → connexion à la base de données
+├── sql/            → script de création de la base
+├── vues/
+│   ├── clients/    → pages du site public
+│   └── back-office/→ pages d'administration
+└── index.html
+```
 
-### 2. Parcours utilisateur
+### Fonctionnement général
 
-- **Inscription** (`vues/clients/inscription.html`) : l'utilisateur renseigne nom, prénom, email et mot de passe. Le mot de passe est haché (bcrypt) côté serveur. Un email HTML de confirmation est envoyé avec un lien contenant un token valable 24h.
-- **Confirmation email** (`api/confirmer_email.php`) : en cliquant sur le lien reçu, le compte est activé (`email_verifie = 1`).
-- **Connexion** (`vues/clients/connexion.html`) : vérifie l'email/mot de passe ; refuse si l'email n'est pas confirmé. En cas de succès, les informations utilisateur sont stockées dans `sessionStorage` côté navigateur (équivalent JS des sessions PHP, comme exigé par les consignes).
-- **Mot de passe oublié** (`vues/clients/mot-de-passe-oublie.html` puis `reinitialiser-mot-de-passe.html`) : un email HTML avec un lien de réinitialisation (token valable 1h) est envoyé ; le lien mène à un formulaire de saisie du nouveau mot de passe.
+- Toutes les interactions se font en **AJAX** (`fetch`), sans rechargement de page après le chargement initial.
+- La navigation et l'état de connexion côté client sont gérés via **`sessionStorage`** en JavaScript.
+- Les actions sensibles (suppression, changement de rôle) sont protégées côté serveur par des **sessions PHP** et un **jeton CSRF**, en complément de `sessionStorage`, pour empêcher toute falsification de rôle depuis le navigateur.
+- La base de données utilise une **table `users` unique**, la distinction des droits (utilisateur / modérateur / administrateur) se faisant uniquement via la colonne `role`.
 
-Toutes les interactions se font via `fetch()` (AJAX) vers les scripts PHP du dossier `api/`, sans aucun rechargement de page.
+### Installation
+
+1. Importer le script SQL situé dans sql/ via phpMyAdmin (onglet "Importer")
+2. Générer les mots de passe de test avec :
+   
+   php -r "echo password_hash('Test1234!', PASSWORD_BCRYPT);"
+   
+   et les insérer dans la table users si ce n'est pas déjà fait
+3. Lancer Apache et MySQL via XAMPP
+4. Accéder au projet via `http://localhost/reseau-social-php/`
+
+---
 
 ## Identifiants de test
 
-| Rôle  | Email | Mot de passe |
-|-------|-------|---------------|
-| Administrateur (back-office) | admin@reseausocial.test | Test1234! |
-| Client | À créer via le formulaire d'inscription | — |
+### Espace client
 
-> Remarque : pour tester le parcours client complet, créez un compte via `inscription.html`, puis confirmez l'email en cliquant sur le lien reçu (ou consultez le lien directement dans les logs SMTP si vous testez en local sans boîte mail réelle).
+| Email                   | Mot de passe |
+| client@reseausocial.com | Test1234!    |
 
-## Liste des membres du groupe
+### Espace back-office (administration)
 
-| Nom | Tâches réalisées |
-|-----|--------------------|
-| _À compléter_ | _À compléter_ |
-| _À compléter_ | _À compléter_ |
+| Email                        | Mot de passe | Rôle           |
+| admin@reseausocial.com       | Test1234!    | Administrateur |
+| moderateur@reseausocial.com  | Test1234!    | Modérateur     |
 
-## Sécurité implémentée
 
-- Mots de passe hachés avec `password_hash()` (bcrypt), jamais stockés en clair.
-- Requêtes SQL préparées (PDO) contre les injections SQL.
-- Validation des entrées côté serveur (email, robustesse du mot de passe).
-- Tokens de confirmation/réinitialisation aléatoires (`random_bytes`), à usage unique et avec expiration.
-- Messages d'erreur génériques pour ne pas révéler l'existence d'un compte (mot de passe oublié, connexion).
+
+## Membres du groupe
+
+- ALLADJODJO Mahuna Juliette
+- KOUHOGBE Urielle
+- TOGBE Raissa
+- D'ALMEIDA Eliah
+
+
+
+## Répartition des tâches
+
+**KOUHOGBE Urielle** — Authentification & Base de données
+- Inscription avec confirmation par email (template HTML)
+- Connexion et gestion de session côté client
+- Mot de passe oublié (réinitialisation par email)
+- Conception initiale de la base de données
+
+**TOGBE Raissa** — Articles, commentaires, likes/dislikes
+- Page d'accueil et flux d'articles
+- Publication et affichage des articles
+- Système de likes/dislikes avec persistance
+- Commentaires en AJAX
+
+**D'ALMEIDA Eliah** — Amis, profils et chat
+- Gestion des demandes d'amitié (envoi, acceptation, refus)
+- Consultation des profils utilisateurs
+- Modification du profil personnel et du mot de passe
+- Module de chat (conversations, envoi de messages et d'images)
+
+**ALLADJODJO Mahuna Juliette** — Administration, sécurité, tests, documentation et GitHub
+- Back-office : authentification admin/modérateur distincte
+- Dashboard avec statistiques détaillées
+- Gestion des utilisateurs (consultation, recherche de profil détaillé, suspension/suppression)
+- Gestion des articles (consultation, suppression)
+- Gestion des comptes administrateurs et modérateurs (promotion, création, suppression)
+- Sécurité : protection CSRF sur toutes les actions sensibles, contrôle des rôles côté serveur, fusion et cohérence du schéma de base de données
+- Tests fonctionnels de l'ensemble du back-office
+- Gestion du dépôt GitHub et documentation
+
+---
+
+## Dépôt GitHub
+
+[https://github.com/ALLADJODJOJuliette/Reseau-social-php](https://github.com/ALLADJODJOJuliette/Reseau-social-php)
