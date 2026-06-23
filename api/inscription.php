@@ -4,15 +4,16 @@
  * Méthode : POST
  * Corps JSON attendu : { nom, prenom, email, mot_de_passe }
  */
-
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../config/config.php';
-require_once __DIR__ . '/../utils/helpers.php';
-require_once __DIR__ . '/../utils/mailer.php';
+require_once __DIR__ . '/utils/helpers.php';
+require_once __DIR__ . '/utils/mailer.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
@@ -47,7 +48,7 @@ try {
     $pdo = getConnexionDB();
 
     // ---- Vérifier que l'email n'est pas déjà utilisé ----
-    $stmt = $pdo->prepare('SELECT id FROM utilisateurs WHERE email = :email');
+    $stmt = $pdo->prepare('SELECT id FROM users WHERE email = :email');
     $stmt->execute(['email' => $email]);
     if ($stmt->fetch()) {
         repondreJSON(false, 'Cette adresse email est déjà utilisée.', [], 409);
@@ -57,7 +58,7 @@ try {
     $hashMotDePasse = password_hash($motDePasse, PASSWORD_BCRYPT);
 
     $stmt = $pdo->prepare('
-        INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe, email_verifie)
+        INSERT INTO users (nom, prenom, email, mot_de_passe, email_verifie)
         VALUES (:nom, :prenom, :email, :mot_de_passe, 0)
     ');
     $stmt->execute([

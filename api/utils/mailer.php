@@ -51,7 +51,7 @@ function envoyerEmail(string $destinataireEmail, string $destinataireNom, string
         $mail->send();
         return true;
     } catch (Exception $e) {
-        error_log('Erreur envoi email : ' . $mail->ErrorInfo);
+        error_log("Erreur envoi email : {$e->getMessage()}");
         return false;
     }
 }
@@ -88,7 +88,7 @@ function templateEmailConfirmation(string $prenom, string $lienConfirmation): st
                                     </a>
                                 </div>
                                 <p style="color:#777;font-size:13px;line-height:1.5;">
-                                    Ce lien expire dans ' . DUREE_TOKEN_CONFIRMATION . ' heures. Si vous n’êtes pas à l’origine de cette inscription, ignorez simplement cet email.
+                                   " Ce lien expire dans " . DUREE_TOKEN_CONFIRMATION . " heures. Si vous n’êtes pas à l’origine de cette inscription, ignorez simplement cet email."
                                 </p>
                             </td>
                         </tr>
@@ -137,7 +137,7 @@ function templateEmailResetPassword(string $prenom, string $lienReset): string
                                     </a>
                                 </div>
                                 <p style="color:#777;font-size:13px;line-height:1.5;">
-                                    Ce lien expire dans ' . DUREE_TOKEN_RESET . ' heure(s). Si vous n’êtes pas à l’origine de cette demande, ignorez simplement cet email — votre mot de passe restera inchangé.
+                                    "Ce lien expire dans " . DUREE_TOKEN_RESET ."  heure(s). Si vous n’êtes pas à l’origine de cette demande, ignorez simplement cet email — votre mot de passe restera inchangé."
                                 </p>
                             </td>
                         </tr>

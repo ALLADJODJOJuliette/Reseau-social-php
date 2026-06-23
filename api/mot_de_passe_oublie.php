@@ -11,8 +11,8 @@ header('Access-Control-Allow-Headers: Content-Type');
 
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../config/config.php';
-require_once __DIR__ . '/../utils/helpers.php';
-require_once __DIR__ . '/../utils/mailer.php';
+require_once __DIR__ . '/utils/helpers.php';
+require_once __DIR__ . '/utils/mailer.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
@@ -38,7 +38,7 @@ if (!emailValide($email)) {
 try {
     $pdo = getConnexionDB();
 
-    $stmt = $pdo->prepare('SELECT id, nom, prenom FROM utilisateurs WHERE email = :email');
+    $stmt = $pdo->prepare('SELECT id, nom, prenom FROM users WHERE email = :email');
     $stmt->execute(['email' => $email]);
     $utilisateur = $stmt->fetch();
 

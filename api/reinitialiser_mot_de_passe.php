@@ -10,7 +10,7 @@ header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
 require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../utils/helpers.php';
+require_once __DIR__ . '/utils/helpers.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
@@ -61,7 +61,7 @@ try {
     $pdo->beginTransaction();
 
     $hashMotDePasse = password_hash($nouveauMotDePasse, PASSWORD_BCRYPT);
-    $stmt = $pdo->prepare('UPDATE utilisateurs SET mot_de_passe = :mdp WHERE id = :id');
+    $stmt = $pdo->prepare('UPDATE users SET mot_de_passe = :mdp WHERE id = :id');
     $stmt->execute([
         'mdp' => $hashMotDePasse,
         'id'  => $tokenLigne['utilisateur_id'],

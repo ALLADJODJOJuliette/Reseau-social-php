@@ -1,4 +1,5 @@
-/vendor/
+vendor/
+config/config.php
 composer.lock
 .env
 *.log

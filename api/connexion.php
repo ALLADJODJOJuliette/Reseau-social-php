@@ -15,7 +15,7 @@ header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
 require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../utils/helpers.php';
+require_once __DIR__ . '/utils/helpers.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
@@ -40,7 +40,7 @@ try {
 
     $stmt = $pdo->prepare('
         SELECT id, nom, prenom, email, mot_de_passe, photo_profil, role, email_verifie, statut
-        FROM utilisateurs
+        FROM users
         WHERE email = :email
     ');
     $stmt->execute(['email' => $email]);
@@ -60,7 +60,7 @@ try {
     }
 
     // ---- Mise à jour de la dernière connexion ----
-    $stmt = $pdo->prepare('UPDATE utilisateurs SET derniere_connexion = NOW() WHERE id = :id');
+    $stmt = $pdo->prepare('UPDATE users SET derniere_connexion = NOW() WHERE id = :id');
     $stmt->execute(['id' => $utilisateur['id']]);
 
     // ---- Données renvoyées au frontend pour sessionStorage ----

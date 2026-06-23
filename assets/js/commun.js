@@ -4,7 +4,7 @@
  */
 
 // URL de base de l'API (à adapter selon l'environnement de déploiement)
-const URL_API = '/reseau-social/api';
+const URL_API = '/reseau-social-php/api';
 
 /**
  * Effectue une requête AJAX (fetch) vers l'API PHP.

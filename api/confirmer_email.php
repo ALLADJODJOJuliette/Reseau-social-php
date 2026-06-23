@@ -68,7 +68,7 @@ try {
     // ---- Activation du compte ----
     $pdo->beginTransaction();
 
-    $stmt = $pdo->prepare('UPDATE utilisateurs SET email_verifie = 1 WHERE id = :id');
+    $stmt = $pdo->prepare('UPDATE users SET email_verifie = 1 WHERE id = :id');
     $stmt->execute(['id' => $tokenLigne['utilisateur_id']]);
 
     $stmt = $pdo->prepare('UPDATE tokens_confirmation SET utilise = 1 WHERE id = :id');
