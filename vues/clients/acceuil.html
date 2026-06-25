@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil — Réseau Social</title>
+    <link rel="stylesheet" href="../../assets/css/accueil.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-logo">📘 RéseauSocial</div>
+        <div class="navbar-user">
+            <img id="nav-photo" src="" alt="photo">
+            <span id="nav-nom"></span>
+            <a href="../auth/logout.php">Déconnexion</a>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- FORMULAIRE PUBLICATION -->
+        <div class="card publication-form">
+            <div class="publication-header">
+                <img id="form-photo" src="" alt="photo">
+                <textarea id="post-contenu" placeholder="Quoi de neuf ?"></textarea>
+            </div>
+            <div class="publication-footer">
+                <label for="post-image" class="btn-image">📷 Photo</label>
+                <input type="file" id="post-image" accept="image/*" hidden>
+                <span id="image-preview-nom"></span>
+                <button id="btn-publier">Publier</button>
+            </div>
+        </div>
+
+        <!-- FIL D'ACTUALITÉ -->
+        <div id="fil-actualite">
+            <!-- Les posts sont injectés ici par accueil.js -->
+        </div>
+
+    </div>
+
+    <!-- TEMPLATE POST (caché, cloné par JS) -->
+    <template id="template-post">
+        <div class="card post" data-post-id="">
+            <div class="post-header">
+                <img class="post-photo" src="" alt="photo">
+                <div>
+                    <span class="post-auteur"></span>
+                    <span class="post-date"></span>
+                </div>
+            </div>
+            <div class="post-contenu"></div>
+            <div class="post-image-container">
+                <img class="post-image" src="" alt="image du post" hidden>
+            </div>
+            <div class="post-stats">
+                <span class="stat-likes">0 réactions</span>
+                <span class="stat-comments">0 commentaires</span>
+            </div>
+            <div class="post-actions">
+                <div class="reactions-wrapper">
+                    <button class="btn-reaction active" data-reaction="jaime">👍 J'aime</button>
+                    <div class="reactions-popup">
+                        <button class="btn-reaction" data-reaction="jaime">👍</button>
+                        <button class="btn-reaction" data-reaction="coeur">❤️</button>
+                        <button class="btn-reaction" data-reaction="rire">😂</button>
+                    </div>
+                </div>
+                <button class="btn-commenter">💬 Commenter</button>
+            </div>
+            <div class="comments-section" hidden>
+                <div class="comments-list"></div>
+                <div class="comment-form">
+                    <img class="comment-photo" src="" alt="photo">
+                    <input type="text" class="comment-input" placeholder="Écrire un commentaire...">
+                    <button class="btn-envoyer-comment">Envoyer</button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- TEMPLATE COMMENTAIRE (caché, cloné par JS) -->
+    <template id="template-comment">
+        <div class="comment">
+            <img class="comment-photo" src="" alt="photo">
+            <div class="comment-body">
+                <span class="comment-auteur"></span>
+                <p class="comment-contenu"></p>
+                <span class="comment-date"></span>
+            </div>
+        </div>
+    </template>
+
+    <script src="../../assets/js/accueil.js"></script>
+</body>
+</html>
