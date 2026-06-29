@@ -1,29 +1,28 @@
 <?php
 // api/posts/create_post.php
 
-session_start();
 header('Content-Type: application/json');
-
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode(['success' => false, 'message' => 'Non connecté']);
-    exit;
-}
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'message' => 'Méthode non autorisée']);
     exit;
 }
 
+$userId = $_POST['user_id'] ?? null;
+
+if (!$userId) {
+    echo json_encode(['success' => false, 'message' => 'Non connecté']);
+    exit;
+}
+
 $contenu = trim($_POST['contenu'] ?? '');
 $image_path = null;
 
-// Vérification : contenu ou image obligatoire
 if (empty($contenu) && empty($_FILES['image']['name'])) {
     echo json_encode(['success' => false, 'message' => 'Le post ne peut pas être vide']);
     exit;
 }
 
-// Gestion de l'image (optionnelle)
 if (!empty($_FILES['image']['name'])) {
     $extensions_autorisees = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
     $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
@@ -62,14 +61,13 @@ try {
     ");
 
     $stmt->execute([
-        ':user_id' => $_SESSION['user_id'],
+        ':user_id' => $userId,
         ':contenu' => $contenu,
         ':image'   => $image_path
     ]);
 
     $post_id = $pdo->lastInsertId();
 
-    // Récupérer le post créé avec les infos auteur pour l'afficher immédiatement
     $stmt2 = $pdo->prepare("
         SELECT p.id, p.contenu, p.image, p.date_publication,
                u.id AS auteur_id, u.nom, u.prenom, u.photo_profil

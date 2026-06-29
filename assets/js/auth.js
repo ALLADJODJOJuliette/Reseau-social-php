@@ -27,6 +27,9 @@ function initFormulaireInscription() {
         const nom = document.getElementById('nom').value.trim();
         const prenom = document.getElementById('prenom').value.trim();
         const email = document.getElementById('email').value.trim();
+        const telephone = document.getElementById('telephone').value.trim();
+        const date_naissance = document.getElementById('date_naissance').value;
+        const sexe = document.getElementById('sexe').value;
         const motDePasse = document.getElementById('motDePasse').value;
         const confirmation = document.getElementById('confirmationMotDePasse').value;
 
@@ -46,7 +49,7 @@ function initFormulaireInscription() {
 
         try {
             const reponse = await appelAPI('inscription.php', 'POST', {
-                nom, prenom, email, mot_de_passe: motDePasse
+                nom, prenom, email, telephone, date_naissance, sexe, mot_de_passe: motDePasse
             });
 
             if (reponse.succes) {
@@ -89,7 +92,6 @@ function initFormulaireConnexion() {
             });
 
             if (reponse.succes) {
-                // ---- Stockage de la session côté client (sessionStorage) ----
                 sessionStorage.setItem('utilisateur', JSON.stringify(reponse.utilisateur));
                 window.location.href = 'accueil.html';
             } else {
@@ -125,8 +127,6 @@ function initFormulaireMotDePasseOublie() {
         try {
             const reponse = await appelAPI('mot_de_passe_oublie.php', 'POST', { email });
 
-            // Le serveur renvoie toujours succes=true avec un message générique,
-            // pour ne pas révéler si l'email existe dans la base.
             afficherMessage(messageAlerte, reponse.message, reponse.succes ? 'succes' : 'erreur');
             if (reponse.succes) {
                 formulaire.reset();
@@ -150,12 +150,11 @@ function initFormulaireReinitialisation() {
     const messageAlerte = document.getElementById('messageAlerte');
     const bouton = document.getElementById('boutonReinitialiser');
 
-    // ---- Récupération du token depuis l'URL (?token=...) ----
     const parametresURL = new URLSearchParams(window.location.search);
     const token = parametresURL.get('token');
 
     if (!token) {
-        afficherMessage(messageAlerte, 'Lien invalide : aucun token trouvé dans l’URL.', 'erreur');
+        afficherMessage(messageAlerte, 'Lien invalide : aucun token trouvé dans l\'URL.', 'erreur');
         formulaire.querySelector('button').disabled = true;
         return;
     }

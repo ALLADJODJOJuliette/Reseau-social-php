@@ -20,23 +20,47 @@
             <div id="messageAlerte" class="message-alerte"></div>
 
             <form id="formulaireInscription">
+
                 <div class="champ-formulaire">
                     <input type="text" id="prenom" name="prenom" placeholder="Prénom" required>
                 </div>
+
                 <div class="champ-formulaire">
                     <input type="text" id="nom" name="nom" placeholder="Nom" required>
                 </div>
+
                 <div class="champ-formulaire">
                     <input type="email" id="email" name="email" placeholder="Adresse email" required>
                 </div>
+
+                <div class="champ-formulaire">
+                    <input type="tel" id="telephone" name="telephone" placeholder="Téléphone (optionnel)">
+                </div>
+
+                <div class="champ-formulaire">
+                    <label for="date_naissance" class="label-champ">Date de naissance</label>
+                    <input type="date" id="date_naissance" name="date_naissance">
+                </div>
+
+                <div class="champ-formulaire">
+                    <select id="sexe" name="sexe">
+                        <option value="">Sexe (optionnel)</option>
+                        <option value="homme">Homme</option>
+                        <option value="femme">Femme</option>
+                    </select>
+                </div>
+
                 <div class="champ-formulaire">
                     <input type="password" id="motDePasse" name="mot_de_passe" placeholder="Mot de passe" required>
                     <div class="indication-champ">Au moins 8 caractères, une majuscule, une minuscule et un chiffre.</div>
                 </div>
+
                 <div class="champ-formulaire">
                     <input type="password" id="confirmationMotDePasse" name="confirmation_mot_de_passe" placeholder="Confirmer le mot de passe" required>
                 </div>
+
                 <button type="submit" id="boutonInscription" class="bouton bouton-succes">S'inscrire</button>
+
             </form>
 
             <hr class="separateur">

@@ -1,21 +1,21 @@
 <?php
 // api/comments/add_comment.php
 
-session_start();
 header('Content-Type: application/json');
-
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode(['success' => false, 'message' => 'Non connecté']);
-    exit;
-}
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'message' => 'Méthode non autorisée']);
     exit;
 }
 
+$userId = $_POST['user_id'] ?? null;
 $post_id = intval($_POST['post_id'] ?? 0);
 $contenu = trim($_POST['contenu'] ?? '');
+
+if (!$userId) {
+    echo json_encode(['success' => false, 'message' => 'Non connecté']);
+    exit;
+}
 
 if (!$post_id) {
     echo json_encode(['success' => false, 'message' => 'Post invalide']);
@@ -40,25 +40,13 @@ try {
         INSERT INTO comments (user_id, post_id, contenu)
         VALUES (:user_id, :post_id, :contenu)
     ");
-
-    $stmt->execute([
-        ':user_id' => $_SESSION['user_id'],
-        ':post_id' => $post_id,
-        ':contenu' => $contenu
-    ]);
+    $stmt->execute([':user_id' => $userId, ':post_id' => $post_id, ':contenu' => $contenu]);
 
     $comment_id = $pdo->lastInsertId();
 
-    // Récupérer le commentaire avec les infos auteur
     $stmt2 = $pdo->prepare("
-        SELECT 
-            c.id,
-            c.contenu,
-            c.date_commentaire,
-            u.id AS auteur_id,
-            u.nom,
-            u.prenom,
-            u.photo_profil
+        SELECT c.id, c.contenu, c.date_commentaire,
+               u.id AS auteur_id, u.nom, u.prenom, u.photo_profil
         FROM comments c
         JOIN users u ON c.user_id = u.id
         WHERE c.id = :id

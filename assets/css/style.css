@@ -59,6 +59,29 @@ body {
     font-weight: bold;
     margin-bottom: 16px;
 }
+.champ-formulaire select {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 15px;
+    border: 1px solid var(--couleur-bordure);
+    border-radius: 6px;
+    outline: none;
+    background-color: #fff;
+    color: var(--couleur-texte);
+    cursor: pointer;
+    transition: border-color 0.15s;
+}
+
+.champ-formulaire select:focus {
+    border-color: var(--couleur-primaire);
+}
+
+.label-champ {
+    display: block;
+    font-size: 13px;
+    color: var(--couleur-texte-clair);
+    margin-bottom: 6px;
+}
 
 .bloc-presentation p {
     font-size: 24px;

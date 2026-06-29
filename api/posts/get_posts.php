@@ -1,10 +1,11 @@
 <?php
 // api/posts/get_posts.php
 
-session_start();
 header('Content-Type: application/json');
 
-if (!isset($_SESSION['user_id'])) {
+$userId = $_GET['user_id'] ?? null;
+
+if (!$userId) {
     echo json_encode(['success' => false, 'message' => 'Non connecté']);
     exit;
 }
@@ -37,7 +38,7 @@ try {
         ORDER BY p.date_publication DESC
     ");
 
-    $stmt->execute([':user_id' => $_SESSION['user_id']]);
+    $stmt->execute([':user_id' => $userId]);
     $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode(['success' => true, 'posts' => $posts]);

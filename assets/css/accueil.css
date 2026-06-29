@@ -1,0 +1,508 @@
+/* =============================================
+   accueil.css — Page d'accueil Réseau Social
+   ============================================= */
+
+/* ---------- Reset & Variables ---------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bleu:        #1877f2;
+    --bleu-hover:  #1460c9;
+    --bleu-clair:  #e7f0fd;
+    --gris-bg:     #f0f2f5;
+    --gris-bord:   #dce1e9;
+    --gris-texte:  #65676b;
+    --blanc:       #ffffff;
+    --noir:        #1c1e21;
+    --rouge:       #e0245e;
+    --radius:      12px;
+    --ombre:       0 1px 3px rgba(0,0,0,0.12);
+    --ombre-lg:    0 4px 16px rgba(0,0,0,0.10);
+    --transition:  0.2s ease;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--gris-bg);
+    color: var(--noir);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* ---------- Navbar ---------- */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--blanc);
+    border-bottom: 1px solid var(--gris-bord);
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: var(--ombre);
+}
+
+.navbar-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--bleu);
+    letter-spacing: -0.5px;
+}
+
+.navbar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar-user img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--gris-bord);
+}
+
+#nav-nom {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--noir);
+}
+
+.bouton-deconnexion {
+    background: none;
+    border: 1px solid var(--gris-bord);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gris-texte);
+    cursor: pointer;
+    transition: background var(--transition), color var(--transition);
+}
+
+.bouton-deconnexion:hover {
+    background: var(--gris-bg);
+    color: var(--rouge);
+    border-color: var(--rouge);
+}
+
+/* ---------- Layout principal ---------- */
+.container {
+    max-width: 680px;
+    margin: 24px auto;
+    padding: 0 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ---------- Card générique ---------- */
+.card {
+    background: var(--blanc);
+    border-radius: var(--radius);
+    box-shadow: var(--ombre);
+    overflow: hidden;
+}
+
+/* ---------- Formulaire de publication ---------- */
+.publication-form {
+    padding: 16px;
+}
+
+.publication-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.publication-header img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+#post-contenu {
+    flex: 1;
+    border: none;
+    background: var(--gris-bg);
+    border-radius: 24px;
+    padding: 12px 18px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    resize: none;
+    min-height: 48px;
+    max-height: 200px;
+    outline: none;
+    transition: background var(--transition);
+    color: var(--noir);
+}
+
+#post-contenu::placeholder {
+    color: var(--gris-texte);
+}
+
+#post-contenu:focus {
+    background: #e4e6ea;
+}
+
+.publication-footer {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--gris-bord);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn-image {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: var(--gris-bg);
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--gris-texte);
+    cursor: pointer;
+    transition: background var(--transition);
+}
+
+.btn-image:hover {
+    background: #dce1e9;
+}
+
+#image-preview-nom {
+    font-size: 0.82rem;
+    color: var(--gris-texte);
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#btn-publier {
+    margin-left: auto;
+    background: var(--bleu);
+    color: var(--blanc);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 22px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background var(--transition), transform var(--transition);
+}
+
+#btn-publier:hover {
+    background: var(--bleu-hover);
+    transform: translateY(-1px);
+}
+
+#btn-publier:active {
+    transform: translateY(0);
+}
+
+/* ---------- Post ---------- */
+.post {
+    padding: 16px 16px 0 16px;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.post-photo {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.post-auteur {
+    display: block;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--noir);
+}
+
+.post-date {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--gris-texte);
+}
+
+.post-contenu {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--noir);
+    margin-bottom: 12px;
+    word-break: break-word;
+}
+
+/* Image du post */
+.post-image-container {
+    margin: 0 -16px;
+}
+
+.post-image {
+    width: 100%;
+    max-height: 520px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Stats (réactions + commentaires) */
+.post-stats {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gris-bord);
+    font-size: 0.83rem;
+    color: var(--gris-texte);
+}
+
+/* ---------- Actions (boutons réaction/commenter) ---------- */
+.post-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 0;
+}
+
+/* Wrapper réactions avec popup */
+.reactions-wrapper {
+    position: relative;
+    display: inline-flex;
+}
+
+.reactions-popup {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 0;
+    background: var(--blanc);
+    border-radius: 50px;
+    box-shadow: var(--ombre-lg);
+    border: 1px solid var(--gris-bord);
+    padding: 6px 10px;
+    gap: 6px;
+    flex-direction: row;
+    z-index: 10;
+}
+
+.reactions-wrapper:hover .reactions-popup {
+    display: flex;
+}
+
+.reactions-popup .btn-reaction {
+    font-size: 1.4rem;
+    background: none;
+    border: none;
+    padding: 4px 6px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.15s;
+}
+
+.reactions-popup .btn-reaction:hover {
+    transform: scale(1.35);
+    background: var(--gris-bg);
+}
+
+/* Bouton J'aime principal */
+.btn-reaction.active,
+.btn-commenter {
+    flex: 1;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--gris-texte);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: background var(--transition), color var(--transition);
+}
+
+.btn-reaction.active:hover,
+.btn-commenter:hover {
+    background: var(--gris-bg);
+    color: var(--bleu);
+}
+
+.btn-reaction.active.liked {
+    color: var(--bleu);
+}
+
+/* ---------- Section commentaires ---------- */
+.comments-section {
+    border-top: 1px solid var(--gris-bord);
+    padding: 12px 0 0 0;
+    margin-top: 4px;
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 12px;
+    max-height: 320px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+/* Scrollbar commentaires */
+.comments-list::-webkit-scrollbar {
+    width: 4px;
+}
+.comments-list::-webkit-scrollbar-thumb {
+    background: var(--gris-bord);
+    border-radius: 4px;
+}
+
+/* Commentaire individuel */
+.comment {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.comment .comment-photo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.comment-body {
+    background: var(--gris-bg);
+    border-radius: 18px;
+    padding: 8px 14px;
+    flex: 1;
+}
+
+.comment-auteur {
+    display: block;
+    font-weight: 700;
+    font-size: 0.83rem;
+    color: var(--noir);
+    margin-bottom: 2px;
+}
+
+.comment-contenu {
+    font-size: 0.88rem;
+    color: var(--noir);
+    word-break: break-word;
+}
+
+.comment-date {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--gris-texte);
+    margin-top: 4px;
+}
+
+/* Formulaire de commentaire */
+.comment-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0 12px 0;
+}
+
+.comment-form .comment-photo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.comment-input {
+    flex: 1;
+    border: none;
+    background: var(--gris-bg);
+    border-radius: 24px;
+    padding: 9px 16px;
+    font-size: 0.88rem;
+    font-family: inherit;
+    outline: none;
+    transition: background var(--transition);
+    color: var(--noir);
+}
+
+.comment-input::placeholder {
+    color: var(--gris-texte);
+}
+
+.comment-input:focus {
+    background: #dce1e9;
+}
+
+.btn-envoyer-comment {
+    background: var(--bleu);
+    color: var(--blanc);
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background var(--transition);
+}
+
+.btn-envoyer-comment:hover {
+    background: var(--bleu-hover);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+    .container {
+        margin: 12px auto;
+        padding: 0;
+        gap: 10px;
+    }
+
+    .card {
+        border-radius: 0;
+    }
+
+    .navbar {
+        padding: 0 12px;
+    }
+
+    #nav-nom {
+        display: none;
+    }
+
+    .post-actions {
+        gap: 2px;
+    }
+
+    .btn-reaction.active,
+    .btn-commenter {
+        font-size: 0.82rem;
+        padding: 8px 6px;
+    }
+}
